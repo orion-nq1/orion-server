@@ -27,8 +27,8 @@ const startServer = async () => {
       }
     });
     
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is running on port ${process.env.PORT}`);
+    app.listen(Number(process.env.PORT), '::', () => {
+      console.log(`Server is running on port ${process.env.PORT} (IPv4 & IPv6)`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);
