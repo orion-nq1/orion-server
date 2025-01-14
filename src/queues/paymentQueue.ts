@@ -1,12 +1,17 @@
 import { Queue, Worker, QueueEvents } from 'bullmq';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { PublicKey } from '@solana/web3.js';
 import { User } from '../mongoose/models/User';
 import { createConnection } from '../utils/solana';
 
+const redisURL = new URL(process.env.REDIS_URL!);
 const paymentQueue = new Queue('payment-verification', {
-  connection: {
-    url: process.env.REDIS_URL!
-  }
+    connection: {
+        family: 0,
+        host: redisURL.hostname,
+        port: parseInt(redisURL.port),
+        username: redisURL.username,
+        password: redisURL.password
+    }
 });
 
 interface VerifyPaymentJob {
